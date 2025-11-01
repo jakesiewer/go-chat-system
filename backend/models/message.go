@@ -1,12 +1,16 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type Message struct {
-	ID   string     `json:"id,omitempty"`
-	From ClientInfo `json:"from,omitempty"`
-	Text string     `json:"text,omitempty"`
-	Room string     `json:"room,omitempty"`
+	ID   string     `json:"id"`
+	From ClientInfo `json:"from"`
+	Text string     `json:"text"`
+	Room string     `json:"room"`
 	Type Command    `json:"type"`
 	Time time.Time  `json:"time"`
 }
@@ -28,6 +32,7 @@ const (
 
 func BuildMessage(from ClientInfo, room string, msgType Command, text string) Message {
 	return Message{
+		ID:   uuid.New().String(),
 		From: from,
 		Room: room,
 		Type: msgType,
