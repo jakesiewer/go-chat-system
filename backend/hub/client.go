@@ -4,7 +4,6 @@ import (
 	"chat-system/models"
 	"log"
 	"strings"
-	"time"
 
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
@@ -42,17 +41,11 @@ func (c *Client) Read() {
 			log.Println("Error reading message:", err)
 			break
 		}
+		msg := models.BuildMessage(models.ClientInfo{
+			ID:       c.ID,
+			Username: c.Username,
+		}, c.Room.Name, models.CommandMessage, string(p))
 
-		msg := models.Message{
-			From: models.ClientInfo{
-				ID:       c.ID,
-				Username: c.Username,
-			},
-			Type: "",
-			Room: c.Room.Name,
-			Text: string(p),
-			Time: time.Now(),
-		}
 		c.parseMessage(msg)
 	}
 }
