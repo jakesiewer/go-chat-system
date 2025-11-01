@@ -3,6 +3,7 @@ package models
 import "time"
 
 type Message struct {
+	ID   string     `json:"id,omitempty"`
 	From ClientInfo `json:"from,omitempty"`
 	Text string     `json:"text,omitempty"`
 	Room string     `json:"room,omitempty"`
