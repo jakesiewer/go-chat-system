@@ -5,9 +5,13 @@ import (
 	"chat-system/server"
 	"fmt"
 	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	godotenv.Load()
 	fmt.Println("Distributed Chat App v0.01")
 
 	h := hub.NewHub()
@@ -15,8 +19,14 @@ func main() {
 
 	h.GetOrCreateRoom("general")
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Printf("Server starting on port %s\n", port)
 	setupRoutes(h)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+port, nil)
 }
 
 func setupRoutes(h *hub.Hub) {
