@@ -11,7 +11,7 @@ export default function ChatContainer({ username, room }: { username: string; ro
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_CHAT_API_UR}?username=${username}&room=${room}`);
+        const socket = new WebSocket(`${process.env.NEXT_PUBLIC_CHAT_API_URL}?username=${username}&room=${room}`);
         setWs(socket);
 
         socket.onmessage = (event) => {
